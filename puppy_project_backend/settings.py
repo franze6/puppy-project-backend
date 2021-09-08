@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-u@((ow2foyg%k%rse5uzknf6r862bpa4v44arao)nt9k3qojx@
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'pet.kandrusyak.ru'
+    'pet.kandrusyak.ru',
+    'localhost'
 ]
 
 
@@ -39,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework'
+    'rest_framework',
+    'puppy'
 ]
 
 MIDDLEWARE = [

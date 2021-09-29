@@ -1,6 +1,7 @@
 from rest_framework import serializers
+from .models import Contact
 
-class ContactSerializer(serializers.Serializer):
-    last_name = serializers.CharField()
-    first_name = serializers.CharField()
-    second_name = serializers.CharField()
+class ContactSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contact
+        fields = ['id', 'last_name', 'first_name', 'second_name', 'birth_date', 'tax_id', 'insurance_number', 'gender']

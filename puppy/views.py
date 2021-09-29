@@ -9,5 +9,5 @@ class ContactsView(APIView):
     def get(self, request):
         contacts = Contact.objects.all()
         serializer = ContactSerializer(contacts, many=True)
-        return Response({'contacts': serializer.data})
+        return Response({'persons': serializer.data})
 

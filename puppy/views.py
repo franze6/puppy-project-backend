@@ -1,13 +1,17 @@
-from rest_framework import generics
+from rest_framework.generics import ListAPIView, RetrieveAPIView
 from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import Person
-from .serializers import ContactSerializer
+from .serializers import PersonsSerializer, PersonDetailSerializer
 from .pagination import CustomPageNumberPagination
 
-class PersonsView(generics.ListAPIView):
+class PersonsView(ListAPIView):
     queryset = Person.objects.all()
-    serializer_class = ContactSerializer
+    serializer_class = PersonsSerializer
     pagination_class = CustomPageNumberPagination
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ContactSerializer.Meta.fields
+    filterset_fields = PersonsSerializer.Meta.fields
+
+class PersonDetailView(RetrieveAPIView):
+    queryset = Person.objects.all()
+    serializer_class = PersonDetailSerializer

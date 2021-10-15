@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.deletion import CASCADE
 from django.utils import timezone
 
 # Create your models here.
@@ -27,6 +28,7 @@ class Person(GeneralModel):
 class Address(GeneralModel):
   address_plain = models.CharField(verbose_name='Адрес', max_length=1000, null=True, blank=True)
   is_active = models.BooleanField(verbose_name='Действующий')
+  person_id = models.ForeignKey(Person, on_delete=CASCADE)
 
   def __str__(self):
     return self.address_plain

@@ -25,10 +25,22 @@ class Person(GeneralModel):
         verbose_name_plural = 'Persons'
         verbose_name = 'Person'
 
+
+class Company(GeneralModel):
+  name = models.CharField(verbose_name='Название', max_length=200, null=True, blank=True)
+
+  def __str__(self):
+    return self.name
+
+  class Meta:
+    verbose_name_plural = 'Компании'
+    verbose_name = 'Компания'
+
 class Address(GeneralModel):
   address_plain = models.CharField(verbose_name='Адрес', max_length=1000, null=True, blank=True)
   is_active = models.BooleanField(verbose_name='Действующий')
-  person_id = models.ForeignKey(Person, on_delete=CASCADE)
+  person_id = models.ForeignKey(Person,  related_name='address', on_delete=CASCADE, null=True, blank=True)
+  company_id = models.ForeignKey(Company, related_name='address', on_delete=CASCADE, null=True, blank=True)
 
   def __str__(self):
     return self.address_plain

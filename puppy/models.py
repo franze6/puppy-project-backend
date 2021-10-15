@@ -1,3 +1,4 @@
+#TODO Проработать Cascade Delete
 from django.db import models
 from django.db.models.deletion import CASCADE
 from django.utils import timezone
@@ -36,6 +37,34 @@ class Company(GeneralModel):
     verbose_name_plural = 'Компании'
     verbose_name = 'Компания'
 
+class Project(GeneralModel):
+  name = models.CharField(verbose_name='Название', max_length=200, null=True, blank=True)
+
+  def __str__(self):
+    return self.name
+
+  class Meta:
+    verbose_name_plural = 'Проекты'
+    verbose_name = 'Проект'
+class Career(GeneralModel):
+  person_id = models.ForeignKey(Person, related_name='career', on_delete=CASCADE)
+  company_id = models.ForeignKey(Company, related_name='career', on_delete=CASCADE)
+  project_id = models.ForeignKey(Project, related_name='career', on_delete=CASCADE)
+  start_date = models.DateField(verbose_name='Дата начала', null=True, blank=True)
+  end_date = models.DateField(verbose_name='Дата окончания', null=True, blank=True)
+  job_title = models.CharField(verbose_name='Должность', max_length=200, null=True, blank=True)
+  role = models.CharField(verbose_name='Роль', max_length=200, null=True, blank=True)
+
+  def __str__(self):
+    return self.job_title
+
+  class Meta:
+    verbose_name_plural = 'Карьерный путь'
+    verbose_name = 'Карьерный путь'
+
+
+
+  
 class Address(GeneralModel):
   address_plain = models.CharField(verbose_name='Адрес', max_length=1000, null=True, blank=True)
   is_active = models.BooleanField(verbose_name='Действующий')

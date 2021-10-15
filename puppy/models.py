@@ -23,3 +23,14 @@ class Person(GeneralModel):
     class Meta:
         verbose_name_plural = 'Persons'
         verbose_name = 'Person'
+
+class Address(GeneralModel):
+  address_plain = models.CharField(verbose_name='Адрес', max_length=1000, null=True, blank=True)
+  is_active = models.BooleanField(verbose_name='Действующий')
+
+  def __str__(self):
+    return self.address_plain
+
+  class Meta:
+    verbose_name_plural = 'Адреса'
+    verbose_name = 'Адрес'

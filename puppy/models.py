@@ -77,3 +77,18 @@ class Address(GeneralModel):
   class Meta:
     verbose_name_plural = 'Адреса'
     verbose_name = 'Адрес'
+
+class Passport(GeneralModel):
+  series = models.CharField(verbose_name='Серия', max_length=10, null=True, blank=True)
+  number = models.CharField(verbose_name='Номер', max_length=20, null=True, blank=True)
+  issued_date = models.DateField(verbose_name='Дата выдачи', null=True, blank=True)
+  issued_by = models.CharField(verbose_name='Кем выдан', max_length=200, null=True, blank=True)
+  issued_by_code = models.CharField(verbose_name='Код подразделения', max_length=50, null=True, blank=True)
+  person_id = models.ForeignKey(Person, related_name='person', on_delete=CASCADE)
+
+  def __str__(self):
+    return f'Паспорт {self.series} {self.number}'
+
+  class Meta:
+    verbose_name_plural = 'Паспорта'
+    verbose_name = 'Паспорт'

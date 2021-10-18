@@ -84,7 +84,7 @@ class Passport(GeneralModel):
   issued_date = models.DateField(verbose_name='Дата выдачи', null=True, blank=True)
   issued_by = models.CharField(verbose_name='Кем выдан', max_length=200, null=True, blank=True)
   issued_by_code = models.CharField(verbose_name='Код подразделения', max_length=50, null=True, blank=True)
-  person_id = models.ForeignKey(Person, related_name='person', on_delete=CASCADE)
+  person_id = models.ForeignKey(Person, related_name='passport', on_delete=CASCADE)
 
   def __str__(self):
     return f'Паспорт {self.series} {self.number}'
@@ -92,3 +92,16 @@ class Passport(GeneralModel):
   class Meta:
     verbose_name_plural = 'Паспорта'
     verbose_name = 'Паспорт'
+
+class Messenger(GeneralModel):
+  name = models.CharField(verbose_name='Название', max_length=200, null=True, blank=True)
+  is_active = models.BooleanField(verbose_name='Действующий')
+  uid = models.CharField(verbose_name='UID', max_length=200)
+  person_id = models.ForeignKey(Person, related_name='messenger', on_delete=CASCADE)
+
+  def __str__(self):
+    return f'{self.name} {self.uid}'
+
+  class Meta:
+    verbose_name_plural = 'Мессенджеры'
+    verbose_name = 'Мессенджер'

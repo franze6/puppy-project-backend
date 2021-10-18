@@ -25,7 +25,7 @@ class PersonDetailSerializer(serializers.ModelSerializer):
         'id', 'last_name', 'first_name', 
         'second_name', 'birth_date', 'tax_id', 
         'insurance_number', 'gender', 'description', 
-        'address', 'career',
+        'address', 'career', 'passport', 'messenger',
         'created_at', 'update_at'
       ]
       depth = 1

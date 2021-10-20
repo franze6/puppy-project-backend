@@ -1,7 +1,12 @@
+import django_filters
 from puppy.models import Person
 
+class PersonFilter(django_filters.FilterSet):
+    class Meta:
+        model = Person
+        fields = ('id', 'last_name')
 
-from puppy.models import Person
-
-def person_list() -> Person:
-    return Person.objects.all()
+def person_list(*, filters=None) -> Person:
+    filters = filters or {}
+    qs = Person.objects.all()
+    return PersonFilter(filters, qs).qs

@@ -6,7 +6,10 @@ from rest_framework.response import Response
 
 from .models import Address, Person
 from .serializers import PersonsSerializer, PersonDetailSerializer
-from .pagination import CustomPageNumberPagination
+
+#from .pagination import CustomPageNumberPagination
+from .pagination import get_paginated_response, LimitOffsetPagination
+
 from .services import (person_create, person_update, person_delete,
                         address_create,
                         messenger_create,                        
@@ -21,6 +24,13 @@ class PersonsView(ListAPIView):
     #filterset_fields = PersonsSerializer.Meta.fields
 
 class PersonListApi(APIView):
+    class Pagination(LimitOffsetPagination):
+        default_limit = 1
+
+    class FilterSerializer(serializers.Serializer):
+        id = serializers.IntegerField(required=False)
+        last_name = serializers.CharField(required=False)
+
     class OutputSerializer(serializers.ModelSerializer):
         class Meta:
             model = Person
@@ -28,11 +38,22 @@ class PersonListApi(APIView):
                 'id', 'last_name', 'first_name', 'second_name', 
                 'birth_date', 'tax_id', 'insurance_number', 'gender'
             )
-    def get(self, request):
-        persons = person_list()
-        data = self.OutputSerializer(persons, many=True).data
 
-        return Response(data)
+    def get(self, request):
+        filter_serializer = self.FilterSerializer(data=request.query_params)
+        filter_serializer.is_valid(raise_exception=True)
+
+        persons = person_list(filters=filter_serializer.validated_data)
+
+        return get_paginated_response(
+            pagination_class=self.Pagination,
+            serializer_class=self.OutputSerializer,
+            queryset=persons,
+            request=request,
+            view=self
+        )
+
+
 
 class PersonDetailView(RetrieveAPIView):
     queryset = Person.objects.all()    

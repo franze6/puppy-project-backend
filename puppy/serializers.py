@@ -6,6 +6,7 @@ class PersonAddressSerializer(serializers.ModelSerializer):
   class Meta:
     model = Address
     fields = [
+      'id',
       'address_plain',
       'is_active',
       'person_id',

@@ -18,8 +18,8 @@ from .views import (
 app_name = 'puppy'
 
 person_patterns = [
-    #path('', PersonListApi.as_view(), name='list'),
-    path('', PersonsView.as_view(), name='list'),
+    path('', PersonListApi.as_view(), name='list'),
+    #path('', PersonsView.as_view(), name='list'),
     path('<int:pk>/', PersonDetailView.as_view(), name='detail'),
     path('create/', PersonCreateApi.as_view(), name='create'),
     path('<int:person_id>/update/', PersonUpdateApi.as_view(), name='update'),

@@ -7,7 +7,10 @@ from rest_framework.response import Response
 from .models import Address, Person
 from .serializers import PersonsSerializer, PersonDetailSerializer
 from .pagination import CustomPageNumberPagination
-from .services import person_create, person_update, person_delete
+from .services import (person_create, person_update, person_delete,
+                        address_create,
+                        messenger_create,                        
+                        passport_create)
 from .selectors import person_list
 
 class PersonsView(ListAPIView):
@@ -56,6 +59,7 @@ class PersonDeleteApi(APIView):
     def delete(self, request, person_id):
         person_delete(id=person_id)
         return Response(status=status.HTTP_200_OK)
+
 class PersonCreateApi(APIView):
     class InputSerializer(serializers.Serializer):
         last_name = serializers.CharField()
@@ -71,4 +75,46 @@ class PersonCreateApi(APIView):
         serializer = self.InputSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         person_create(**serializer.validated_data)
+        return Response(status=status.HTTP_201_CREATED)
+
+
+class AddressCreateApi(APIView):
+    class InputSerializer(serializers.Serializer):
+        address_plain = serializers.CharField()
+        is_active = serializers.BooleanField()
+        person_id = serializers.CharField()
+        #company_id = serializers.CharField(required=False)
+
+    def post(self, request):
+        serializer = self.InputSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        address_create(**serializer.validated_data)
+        return Response(status=status.HTTP_201_CREATED)
+
+class MessengerCreateApi(APIView):
+    class InputSerializer(serializers.Serializer):
+        name = serializers.CharField()
+        is_active = serializers.BooleanField()
+        uid = serializers.CharField()
+        person_id = serializers.CharField()
+
+    def post(self, request):
+        serializer = self.InputSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        messenger_create(**serializer.validated_data)
+        return Response(status=status.HTTP_201_CREATED)
+
+class PassportCreateApi(APIView):
+    class InputSerializer(serializers.Serializer):
+        series = serializers.CharField()
+        number = serializers.CharField()
+        issued_date = serializers.DateField()
+        issued_by = serializers.CharField()
+        issued_by_code = serializers.CharField()
+        person_id = serializers.CharField()
+
+    def post(self, request):
+        serializer = self.InputSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        passport_create(**serializer.validated_data)
         return Response(status=status.HTTP_201_CREATED)

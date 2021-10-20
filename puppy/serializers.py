@@ -21,7 +21,7 @@ class PersonsSerializer(serializers.ModelSerializer):
 class PersonCareerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Career
-        fields = ['company_id', 'project_id']
+        fields = ['company_id', 'project_id', 'start_date', 'end_date', 'job_title', 'role']
         depth = 1
 
 

@@ -1,4 +1,4 @@
-from puppy.models import Person
+from puppy.models import Person, Address, Messenger, Passport
 from datetime import date
 
 def person_create(
@@ -50,3 +50,66 @@ def person_update(
 def person_delete(id: str) -> None:
     Person.objects.filter(id=id).delete()
     return None
+
+def address_create(
+                    *, 
+                    address_plain: str,
+                    is_active: bool,
+                    person_id: str, 
+                    #company_id:str=None,
+                  ) -> Address:
+
+  obj = Address(
+    address_plain=address_plain,
+    is_active=is_active,
+    person_id=person_id,
+  )
+
+  #obj.full_clean()
+  obj.save()
+
+  return obj
+
+def messenger_create(
+                    *, 
+                    name: str,
+                    is_active: bool,
+                    uid: str, 
+                    person_id:str,
+                  ) -> Messenger:
+
+  obj = Messenger(
+    name=name,
+    is_active=is_active,
+    uid=uid, 
+    person_id=person_id,
+  )
+
+  #obj.full_clean()
+  obj.save()
+
+  return obj
+
+def passport_create(
+                    *, 
+                    series: str,
+                    number: str,
+                    issued_date: date, 
+                    issued_by: str,
+                    issued_by_code: str ,
+                    person_id: str ,
+                  ) -> Passport:
+
+  obj = Passport(
+    series=series,
+    number=number,
+    issued_date=issued_date, 
+    issued_by=issued_by,
+    issued_by_code=issued_by_code,
+    person_id=person_id,
+  )
+
+  #obj.full_clean()
+  obj.save()
+
+  return obj

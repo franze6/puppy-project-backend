@@ -13,7 +13,7 @@ from .pagination import get_paginated_response, LimitOffsetPagination
 from .services import (person_create, person_update, person_delete,
                         address_create, address_delete, address_update,
                         messenger_create, messenger_delete, messenger_update,                       
-                        passport_create, passport_delete)
+                        passport_create, passport_delete, passport_update)
 from .selectors import person_list, get_person
 
 class PersonsView(ListAPIView):
@@ -191,6 +191,22 @@ class PassportCreateApi(APIView):
         serializer.is_valid(raise_exception=True)
         passport_create(**serializer.validated_data)
         return Response(status=status.HTTP_201_CREATED)
+
+class PassportUpdateApi(APIView):
+    class InputSerializer(serializers.Serializer):
+        series = serializers.CharField(required=False)
+        number = serializers.CharField(required=False)
+        issued_date = serializers.DateField(required=False)
+        issued_by = serializers.CharField(required=False)
+        issued_by_code = serializers.CharField(required=False)
+        #person_id = serializers.CharField(required=False)
+
+
+    def post(self, request, id):
+        serializer = self.InputSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        passport_update(id=id, **serializer.validated_data)
+        return Response(status=status.HTTP_200_OK)
 
 class PassportDeleteApi(APIView):
     def delete(self, request, id):

@@ -148,6 +148,25 @@ def passport_create(
 
   return obj
 
+def passport_update(
+                    id: str,
+                    *,
+                    series: str=None,
+                    number: str=None,
+                    issued_date:date=None,
+                    issued_by: str=None,
+                    issued_by_code: str=None, 
+                  ) -> None:
+    kwargs = dict(locals())
+    update_fields = {k: v for k, v in kwargs.items() if v is not None and k !='id'}
+    Passport.objects.filter(id=id).update(**update_fields)
+
+    return None
+
+def messenger_delete(id: str) -> None:
+    Messenger.objects.filter(id=id).delete()
+    return None
+
 def passport_delete(id: str) -> None:
     Passport.objects.filter(id=id).delete()
     return None

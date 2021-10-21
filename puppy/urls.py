@@ -10,6 +10,7 @@ from .views import (
     PersonDetailApi,
     AddressCreateApi,
     AddressDeleteApi,
+    AddressUpdateApi,
     MessengerCreateApi,
     MessengerDeleteApi,
     PassportCreateApi,
@@ -31,7 +32,7 @@ address_patterns = [
     #path('', PersonsView.as_view(), name='list'),
     #path('<int:pk>/', PersonDetailView.as_view(), name='detail'),
     path('create/', AddressCreateApi.as_view(), name='create'),
-    #path('<int:person_id>/update/', PersonUpdateApi.as_view(), name='update'),
+    path('<int:id>/update/', AddressUpdateApi.as_view(), name='update'),
     path('<int:id>/delete/', AddressDeleteApi.as_view(), name='delete')
 ]
 

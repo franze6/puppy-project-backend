@@ -74,6 +74,19 @@ def address_delete(id: str) -> None:
     Address.objects.filter(id=id).delete()
     return None
 
+def address_update(
+                    id: str,
+                    *,
+                    address_plain: str=None,
+                    is_active: bool=None,
+                    #person_id:str=None, 
+                  ) -> None:
+    kwargs = dict(locals())
+    update_fields = {k: v for k, v in kwargs.items() if v is not None and k !='id'}
+    Address.objects.filter(id=id).update(**update_fields)
+
+    return None
+
 def messenger_create(
                     *, 
                     name: str,

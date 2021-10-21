@@ -10,3 +10,7 @@ def person_list(*, filters=None) -> Person:
     filters = filters or {}
     qs = Person.objects.all()
     return PersonFilter(filters, qs).qs
+
+def get_person(*, id) -> Person:
+    user = Person.objects.get(id=id)
+    return user

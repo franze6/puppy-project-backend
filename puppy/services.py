@@ -70,6 +70,10 @@ def address_create(
 
   return obj
 
+def address_delete(id: str) -> None:
+    Address.objects.filter(id=id).delete()
+    return None
+
 def messenger_create(
                     *, 
                     name: str,
@@ -89,6 +93,10 @@ def messenger_create(
   obj.save()
 
   return obj
+
+def messenger_delete(id: str) -> None:
+    Messenger.objects.filter(id=id).delete()
+    return None
 
 def passport_create(
                     *, 
@@ -113,3 +121,7 @@ def passport_create(
   obj.save()
 
   return obj
+
+def passport_delete(id: str) -> None:
+    Passport.objects.filter(id=id).delete()
+    return None

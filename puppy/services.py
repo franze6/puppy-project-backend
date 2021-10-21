@@ -62,7 +62,7 @@ def address_create(
   obj = Address(
     address_plain=address_plain,
     is_active=is_active,
-    person_id=person_id,
+    person_id=Person.objects.get(id=person_id),
   )
 
   #obj.full_clean()
@@ -82,7 +82,7 @@ def messenger_create(
     name=name,
     is_active=is_active,
     uid=uid, 
-    person_id=person_id,
+    person_id=Person.objects.get(id=person_id),
   )
 
   #obj.full_clean()
@@ -106,7 +106,7 @@ def passport_create(
     issued_date=issued_date, 
     issued_by=issued_by,
     issued_by_code=issued_by_code,
-    person_id=person_id,
+    person_id=Person.objects.get(id=person_id),
   )
 
   #obj.full_clean()

@@ -12,7 +12,7 @@ from .pagination import get_paginated_response, LimitOffsetPagination
 
 from .services import (person_create, person_update, person_delete,
                         address_create, address_delete, address_update,
-                        messenger_create, messenger_delete,                       
+                        messenger_create, messenger_delete, messenger_update,                       
                         passport_create, passport_delete)
 from .selectors import person_list, get_person
 
@@ -157,6 +157,20 @@ class MessengerCreateApi(APIView):
         serializer.is_valid(raise_exception=True)
         messenger_create(**serializer.validated_data)
         return Response(status=status.HTTP_201_CREATED)
+
+class MessengerUpdateApi(APIView):
+    class InputSerializer(serializers.Serializer):
+        name = serializers.CharField(required=False)
+        is_active = serializers.BooleanField(required=False)
+        uid = serializers.CharField(required=False)
+        #person_id = serializers.CharField(required=False)
+        #person_id = serializers.CharField(required=False)
+
+    def post(self, request, id):
+        serializer = self.InputSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        messenger_update(id=id, **serializer.validated_data)
+        return Response(status=status.HTTP_200_OK)
 
 class MessengerDeleteApi(APIView):
     def delete(self, request, id):

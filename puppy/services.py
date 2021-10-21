@@ -107,6 +107,19 @@ def messenger_create(
 
   return obj
 
+def messenger_update(
+                    id: str,
+                    *,
+                    name: str=None,
+                    is_active: bool=None,
+                    uid:str=None, 
+                  ) -> None:
+    kwargs = dict(locals())
+    update_fields = {k: v for k, v in kwargs.items() if v is not None and k !='id'}
+    Messenger.objects.filter(id=id).update(**update_fields)
+
+    return None
+
 def messenger_delete(id: str) -> None:
     Messenger.objects.filter(id=id).delete()
     return None

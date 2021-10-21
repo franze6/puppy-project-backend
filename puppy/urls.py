@@ -12,6 +12,7 @@ from .views import (
     AddressDeleteApi,
     AddressUpdateApi,
     MessengerCreateApi,
+    MessengerUpdateApi,
     MessengerDeleteApi,
     PassportCreateApi,
     PassportDeleteApi,
@@ -41,7 +42,7 @@ messenger_patterns = [
     #path('', PersonsView.as_view(), name='list'),
     #path('<int:pk>/', PersonDetailView.as_view(), name='detail'),
     path('create/', MessengerCreateApi.as_view(), name='create'),
-    #path('<int:person_id>/update/', PersonUpdateApi.as_view(), name='update'),
+    path('<int:id>/update/', MessengerUpdateApi.as_view(), name='update'),
     path('<int:id>/delete/', MessengerDeleteApi.as_view(), name='delete')
 ]
 

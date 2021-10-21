@@ -11,10 +11,10 @@ from .serializers import PersonsSerializer, PersonDetailSerializer
 from .pagination import get_paginated_response, LimitOffsetPagination
 
 from .services import (person_create, person_update, person_delete,
-                        address_create,
-                        messenger_create,                        
-                        passport_create)
-from .selectors import person_list
+                        address_create, address_delete,
+                        messenger_create, messenger_delete,                       
+                        passport_create, passport_delete)
+from .selectors import person_list, get_person
 
 class PersonsView(ListAPIView):
     queryset = Person.objects.all()
@@ -58,6 +58,22 @@ class PersonListApi(APIView):
 class PersonDetailView(RetrieveAPIView):
     queryset = Person.objects.all()    
     serializer_class = PersonDetailSerializer
+
+class PersonDetailApi(APIView):
+    class OutputSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Person
+            fields = ('id', 'last_name', 'first_name', 
+                        'second_name', 'birth_date', 'tax_id', 
+                        'insurance_number', 'gender', 'description', 
+                        'address', 'career', 'passport', 'messenger',
+                        'created_at', 'update_at')
+            depth = 1
+
+    def get(self, request, person_id):
+        person = get_person(id=person_id)
+        serializer = self.OutputSerializer(person)
+        return Response(serializer.data)
 
 class PersonUpdateApi(APIView):
     class InputSerializer(serializers.Serializer):
@@ -112,6 +128,11 @@ class AddressCreateApi(APIView):
         address_create(**serializer.validated_data)
         return Response(status=status.HTTP_201_CREATED)
 
+class AddressDeleteApi(APIView):
+    def delete(self, request, id):
+        address_delete(id=id)
+        return Response(status=status.HTTP_200_OK)
+
 class MessengerCreateApi(APIView):
     class InputSerializer(serializers.Serializer):
         name = serializers.CharField()
@@ -124,6 +145,11 @@ class MessengerCreateApi(APIView):
         serializer.is_valid(raise_exception=True)
         messenger_create(**serializer.validated_data)
         return Response(status=status.HTTP_201_CREATED)
+
+class MessengerDeleteApi(APIView):
+    def delete(self, request, id):
+        messenger_delete(id=id)
+        return Response(status=status.HTTP_200_OK)
 
 class PassportCreateApi(APIView):
     class InputSerializer(serializers.Serializer):
@@ -139,3 +165,8 @@ class PassportCreateApi(APIView):
         serializer.is_valid(raise_exception=True)
         passport_create(**serializer.validated_data)
         return Response(status=status.HTTP_201_CREATED)
+
+class PassportDeleteApi(APIView):
+    def delete(self, request, id):
+        passport_delete(id=id)
+        return Response(status=status.HTTP_200_OK)

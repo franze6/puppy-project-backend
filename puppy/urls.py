@@ -10,9 +10,12 @@ from .views import (
     PersonDetailApi,
     AddressCreateApi,
     AddressDeleteApi,
+    AddressUpdateApi,
     MessengerCreateApi,
+    MessengerUpdateApi,
     MessengerDeleteApi,
     PassportCreateApi,
+    PassportUpdateApi,
     PassportDeleteApi,
 )
 
@@ -31,7 +34,7 @@ address_patterns = [
     #path('', PersonsView.as_view(), name='list'),
     #path('<int:pk>/', PersonDetailView.as_view(), name='detail'),
     path('create/', AddressCreateApi.as_view(), name='create'),
-    #path('<int:person_id>/update/', PersonUpdateApi.as_view(), name='update'),
+    path('<int:id>/update/', AddressUpdateApi.as_view(), name='update'),
     path('<int:id>/delete/', AddressDeleteApi.as_view(), name='delete')
 ]
 
@@ -40,7 +43,7 @@ messenger_patterns = [
     #path('', PersonsView.as_view(), name='list'),
     #path('<int:pk>/', PersonDetailView.as_view(), name='detail'),
     path('create/', MessengerCreateApi.as_view(), name='create'),
-    #path('<int:person_id>/update/', PersonUpdateApi.as_view(), name='update'),
+    path('<int:id>/update/', MessengerUpdateApi.as_view(), name='update'),
     path('<int:id>/delete/', MessengerDeleteApi.as_view(), name='delete')
 ]
 
@@ -49,7 +52,7 @@ passport_patterns = [
     #path('', PersonsView.as_view(), name='list'),
     #path('<int:pk>/', PersonDetailView.as_view(), name='detail'),
     path('create/', PassportCreateApi.as_view(), name='create'),
-    #path('<int:person_id>/update/', PersonUpdateApi.as_view(), name='update'),
+    path('<int:person_id>/update/', PassportUpdateApi.as_view(), name='update'),
     path('<int:id>/delete/', PassportDeleteApi.as_view(), name='delete')
 ]
 
